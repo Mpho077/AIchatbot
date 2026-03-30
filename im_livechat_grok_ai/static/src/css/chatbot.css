@@ -1,0 +1,22 @@
+/* Fix chatbot message overlap */
+.o_livechat_chatwindow .o_mail_thread {
+    padding-bottom: 80px !important;
+}
+
+.o_livechat_chatwindow .o_thread_message {
+    margin-bottom: 15px;
+}
+
+.o_livechat_chatwindow .o_thread_message:last-child {
+    margin-bottom: 30px;
+}
+
+/* Ensure input doesn't overlap messages */
+.o_livechat_chatwindow .o_composer {
+    margin-top: 10px;
+}
+
+/* Smooth scroll behavior */
+.o_livechat_chatwindow .o_mail_thread_content {
+    scroll-behavior: smooth;
+}

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_grok_ai_config_manager,grok.ai.config.manager,model_grok_ai_config,im_livechat.im_livechat_group_manager,1,1,1,1
+access_grok_ai_config_user,grok.ai.config.user,model_grok_ai_config,im_livechat.im_livechat_group_user,1,0,0,0
+access_grok_ai_service_all,grok.ai.service.all,model_grok_ai_service,base.group_user,1,0,0,0
+access_grok_api_endpoint_manager,grok.api.endpoint.manager,model_grok_api_endpoint,im_livechat.im_livechat_group_manager,1,1,1,1
+access_grok_api_endpoint_user,grok.api.endpoint.user,model_grok_api_endpoint,im_livechat.im_livechat_group_user,1,0,0,0

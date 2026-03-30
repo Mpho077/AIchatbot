@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree view for API Endpoints -->
+    <record id="view_grok_api_endpoint_tree" model="ir.ui.view">
+        <field name="name">grok.api.endpoint.tree</field>
+        <field name="model">grok.api.endpoint</field>
+        <field name="arch" type="xml">
+            <tree string="API Endpoints">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="marker"/>
+                <field name="api_url"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view for API Endpoints -->
+    <record id="view_grok_api_endpoint_form" model="ir.ui.view">
+        <field name="name">grok.api.endpoint.form</field>
+        <field name="model">grok.api.endpoint</field>
+        <field name="arch" type="xml">
+            <form string="API Endpoint">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <group name="basic_info">
+                            <field name="name" placeholder="e.g., Car Hire"/>
+                            <field name="marker" placeholder="e.g., CAR_HIRE"/>
+                            <field name="api_url" placeholder="http://your-api.com/endpoint"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group name="api_request_config">
+                            <field name="request_method"/>
+                            <field name="param_location"/>
+                            <field name="param_name" placeholder="e.g., destination, location, query"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="format_config">
+                            <field name="response_format"/>
+                            <field name="list_item_template" invisible="response_format != 'list'" placeholder="e.g., {name} - {price} {currency}"/>
+                        </group>
+                    </group>
+                    <group name="instructions">
+                        <field name="description" placeholder="What does this API provide?"/>
+                        <field name="prompt_instruction" placeholder="Instructions for the AI on when and how to use this API"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for API Endpoints -->
+    <record id="action_grok_api_endpoint" model="ir.actions.act_window">
+        <field name="name">API Endpoints</field>
+        <field name="res_model">grok.api.endpoint</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first custom API endpoint
+            </p>
+            <p>
+                Add custom API endpoints that the AI can call when customers ask questions.
+                For example, you could add a Car Hire API, Train Tickets API, etc.
+            </p>
+        </field>
+    </record>
+
+</odoo>
