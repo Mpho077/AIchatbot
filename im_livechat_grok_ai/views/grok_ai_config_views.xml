@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Grok AI Configuration Tree View -->
+    <record id="grok_ai_config_tree_view" model="ir.ui.view">
+        <field name="name">grok.ai.config.tree</field>
+        <field name="model">grok.ai.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="model"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Grok AI Configuration Form View -->
+    <record id="grok_ai_config_form_view" model="ir.ui.view">
+        <field name="name">grok.ai.config.form</field>
+        <field name="model">grok.ai.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <group>
+                        <group name="basic_info">
+                            <field name="name" placeholder="e.g. Main Support AI"/>
+                            <field name="model" placeholder="e.g. grok-beta"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group name="api_config">
+                            <field name="api_endpoint"/>
+                            <field name="api_key" password="True"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="ai_params">
+                            <field name="temperature"/>
+                            <field name="max_tokens"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="System Prompt" name="system_prompt">
+                            <field name="system_prompt" widget="text" placeholder="Define how the AI should behave..."/>
+                        </page>
+                        <page string="API Endpoints" name="custom_apis">
+                            <field name="api_endpoint_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="marker"/>
+                                    <field name="api_url"/>
+                                    <field name="response_format" optional="show"/>
+                                    <field name="list_item_template" optional="show"/>
+                                    <field name="active"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group name="basic_info">
+                                            <field name="name" placeholder="e.g., Car Hire"/>
+                                            <field name="marker" placeholder="e.g., CAR_HIRE"/>
+                                            <field name="api_url" placeholder="http://your-api.com/endpoint"/>
+                                            <field name="sequence"/>
+                                            <field name="active"/>
+                                        </group>
+                                        <group name="api_request_config">
+                                            <field name="request_method"/>
+                                            <field name="param_location"/>
+                                            <field name="param_name" placeholder="e.g., destination, location, query"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <group name="format_config">
+                                            <field name="response_format"/>
+                                            <field name="list_item_template" invisible="response_format != 'list'" placeholder="e.g., {name} - {price} {currency}"/>
+                                        </group>
+                                    </group>
+                                    <group name="instructions">
+                                        <field name="description" placeholder="What does this API provide?"/>
+                                        <field name="prompt_instruction" placeholder="Instructions for the AI on when and how to use this API"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Handoff Settings" name="handoff">
+                            <group>
+                                <field name="conversation_handoff_message" widget="text"
+                                    placeholder="Message shown when transferring to human agent..."/>
+                                <field name="offline_agent_message" widget="text"
+                                    placeholder="Message shown when no agents are online and conversation is forwarded..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Grok AI Configuration Search View -->
+    <record id="grok_ai_config_search_view" model="ir.ui.view">
+        <field name="name">grok.ai.config.search</field>
+        <field name="model">grok.ai.config</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="model"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Grok AI Configuration Action -->
+    <record id="grok_ai_config_action" model="ir.actions.act_window">
+        <field name="name">Grok AI Configurations</field>
+        <field name="res_model">grok.ai.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Grok AI Configuration
+            </p>
+            <p>
+                Configure Grok AI to handle initial customer conversations automatically.
+                The AI will detect buying intent and transfer conversations to human agents.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="grok_ai_config_menu"
+        name="Grok AI"
+        parent="im_livechat.menu_livechat_root"
+        action="grok_ai_config_action"
+        sequence="30"/>
+
+</odoo>
